@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "131042284536",
+    "project_id": "spsole-7e486",
+    "storage_bucket": "spsole-7e486.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131042284536:android:19a650af88f91ba377bc0d",
+        "android_client_info": {
+          "package_name": "com.example.spsole"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8YuOtfbWcMwCQj_hcp5LP9jQGnq4MTtQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
