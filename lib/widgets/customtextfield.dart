@@ -24,7 +24,6 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// LABEL
         Text(
           label,
           style: const TextStyle(
@@ -36,7 +35,6 @@ class CustomTextField extends StatelessWidget {
 
         const SizedBox(height: 8),
 
-        /// TEXT FIELD
         Container(
           decoration: BoxDecoration(
             color: AppColors.fgcolor,
