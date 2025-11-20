@@ -145,6 +145,7 @@ class _ScannerScreen extends StatelessWidget {
 // ============================================================================
 // MENU SCREEN (PLACEHOLDER)
 // ============================================================================
+// ignore: unused_element
 class _MenuScreen extends StatelessWidget {
   const _MenuScreen();
 

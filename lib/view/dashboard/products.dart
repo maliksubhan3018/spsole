@@ -1,4 +1,8 @@
+// ignore_for_file: deprecated_member_use, avoid_print, use_super_parameters
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:spsole/config/route_name.dart';
 import 'package:spsole/widgets/appbar.dart';
 import 'package:spsole/widgets/mycolors.dart';
 
@@ -14,12 +18,11 @@ class Products extends StatelessWidget {
         showBackButton: false,
         showPlusButton: true,
         onPressed: () {
-          // Handle add product
+          Get.toNamed(MyPagesName.addproduct);
         },
       ),
       body: Column(
         children: [
-          // Product count banner
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -40,12 +43,10 @@ class Products extends StatelessWidget {
             ),
           ),
 
-          // SEARCH BAR + FILTER BUTTON
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               children: [
-                // Search Field
                 Expanded(
                   child: Container(
                     height: 52,
@@ -91,7 +92,6 @@ class Products extends StatelessWidget {
 
                 const SizedBox(width: 10),
 
-                // Filter Button
                 Container(
                   height: 52,
                   width: 52,
@@ -131,19 +131,15 @@ class Products extends StatelessWidget {
   }
 }
 
-// Clean Product Item - NO bottom border, no extra widgets
 class _ProductItem extends StatelessWidget {
   const _ProductItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 4,
-      ), // Small extra spacing if needed
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          // Product Image
           Container(
             width: 60,
             height: 60,
@@ -156,7 +152,6 @@ class _ProductItem extends StatelessWidget {
 
           const SizedBox(width: 12),
 
-          // Product Details
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

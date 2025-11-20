@@ -4,6 +4,8 @@ import 'package:spsole/view/auth/login.dart';
 import 'package:spsole/view/dashboard/dashboard.dart';
 import 'package:spsole/view/onboarding/get_started.dart';
 import 'package:spsole/view/onboarding/onboarding.dart';
+import 'package:spsole/view/product/add_product.dart';
+import 'package:spsole/view/product/product_details.dart';
 
 class AppRoutes {
   static routes() => [
@@ -11,5 +13,7 @@ class AppRoutes {
     GetPage(name: MyPagesName.getstarted, page: () => const Getstarted()),
     GetPage(name: MyPagesName.login, page: () => Login()),
     GetPage(name: MyPagesName.dashboard, page: () => const Dashboard()),
+    GetPage(name: MyPagesName.addproduct, page: () => const AddProduct()),
+    GetPage(name: MyPagesName.productDetails, page: () => const ProductDetails()),
   ];
 }

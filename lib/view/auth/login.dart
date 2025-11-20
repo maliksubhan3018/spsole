@@ -175,11 +175,9 @@ class Login extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
 
-              /// LOGO
               Image.asset(MyImages.circleimg),
               const SizedBox(height: 25),
 
-              /// EMAIL FIELD
               CustomTextField(
                 label: "Email Address",
                 hintText: "Enter your email",
@@ -195,7 +193,6 @@ class Login extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              /// TITLE
               const Text(
                 'Enter Your Secret password',
                 style: TextStyle(
@@ -206,13 +203,12 @@ class Login extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              /// OTP FIELD WITH CONTROLLER
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: PinCodeTextField(
                   appContext: context,
                   length: 4,
-                  controller: pinController, // ⭐ Added Controller
+                  controller: pinController,
                   keyboardType: TextInputType.number,
                   animationType: AnimationType.fade,
                   pinTheme: PinTheme(
@@ -240,7 +236,6 @@ class Login extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              /// LOGIN BUTTON WITH VALIDATION
               Button(
                 text: 'Login',
                 onPressed: () {
@@ -268,12 +263,10 @@ class Login extends StatelessWidget {
                     return;
                   }
 
-                  // ✅ Both fields valid → Login successful
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Login successfully")),
                   );
 
-                  // Navigate to Dashboard
                   Get.toNamed(MyPagesName.dashboard);
                 },
                 isSubmit: true,
@@ -281,7 +274,6 @@ class Login extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              /// RESET PIN
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -300,7 +292,6 @@ class Login extends StatelessWidget {
               ),
               const SizedBox(height: 25),
 
-              /// FINGERPRINT
               Container(
                 height: 50,
                 width: 50,
@@ -315,9 +306,8 @@ class Login extends StatelessWidget {
                   size: 30,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
 
-              /// VERSION
               const Text(
                 'Version 1.15.25 by spsole offer',
                 style: TextStyle(color: AppColors.white, fontSize: 12),

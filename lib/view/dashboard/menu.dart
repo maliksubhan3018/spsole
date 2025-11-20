@@ -22,7 +22,7 @@ class Menu extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundColor: Colors.amber,
+                  backgroundColor: AppColors.fgcolor,
                   child: const CircleAvatar(
                     radius: 38,
                     backgroundImage: AssetImage(MyImages.circleimg),
@@ -32,7 +32,7 @@ class Menu extends StatelessWidget {
                 const Text(
                   'Store Name',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: AppColors.white,
                   ),
@@ -48,7 +48,7 @@ class Menu extends StatelessWidget {
 
           CustomListTile(
             icon: Icons.person,
-            title: 'User Profile',
+            title: 'Store Setting',
             trailing: const Icon(
               Icons.arrow_forward_ios,
               size: 16,
@@ -65,7 +65,7 @@ class Menu extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.white,
+                  color: AppColors.surface,
                 ),
               ),
             ),
@@ -77,28 +77,29 @@ class Menu extends StatelessWidget {
             trailing: Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: AppColors.white,
+              color: AppColors.surface,
             ),
             onTap: null, // no action
           ),
 
           const CustomListTile(
-            icon: Icons.star,
-            title: 'Rate us on Playstore',
+            icon: Icons.help,
+            title: 'Help and Support',
             trailing: Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: AppColors.white,
+              color: AppColors.surface,
             ),
             onTap: null,
           ),
+
           const CustomListTile(
             icon: Icons.share,
             title: 'Share App',
             trailing: Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: AppColors.white,
+              color: AppColors.surface,
             ),
             onTap: null,
           ),
