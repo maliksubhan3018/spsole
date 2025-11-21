@@ -43,8 +43,7 @@ class Getstarted extends StatelessWidget {
               Button(
                 text: "Signin Using Google Account",
                 onPressed: () {
-                  Navigator.pushNamed(context, "/googlesignin");
-                },
+ Get.toNamed(MyPagesName.signUp);                },
               ),
             ],
           ),
