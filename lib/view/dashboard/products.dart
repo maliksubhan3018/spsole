@@ -3,11 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spsole/config/route_name.dart';
+import 'package:spsole/controllers/get_product_controller.dart';
 import 'package:spsole/widgets/appbar.dart';
 import 'package:spsole/widgets/mycolors.dart';
 
-class Products extends StatelessWidget {
+class Products extends StatefulWidget {
   const Products({super.key});
+
+  @override
+  State<Products> createState() => _ProductsState();
+}
+
+class _ProductsState extends State<Products> {
+  final GetProductController controller = GetProductController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +26,13 @@ class Products extends StatelessWidget {
         showBackButton: false,
         showPlusButton: true,
         onPressed: () {
+          // Navigator.pushNamed(context, MyPagesName.addproduct);
           Get.toNamed(MyPagesName.addproduct);
         },
       ),
       body: Column(
         children: [
+          // Product count
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -32,17 +42,40 @@ class Products extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: const Text(
-                '100 products',
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: controller.fetchProducts(), // <-- fetch products
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text(
+                      'Loading products...',
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return const Text(
+                      'Error loading products',
+                      style: TextStyle(color: Colors.red),
+                    );
+                  }
+                  final productCount = snapshot.data?.length ?? 0;
+                  return Text(
+                    '$productCount products',
+                    style: const TextStyle(
+                      color: AppColors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  );
+                },
               ),
             ),
           ),
 
+          // Search / Filter UI
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
@@ -89,9 +122,7 @@ class Products extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(width: 10),
-
                 Container(
                   height: 52,
                   width: 52,
@@ -109,20 +140,54 @@ class Products extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 16),
 
-          // Product List with Clean Dividers
+          // Product List
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              itemCount: 6, // Change this to your actual data length
-              separatorBuilder: (context, index) => const Divider(
-                height: 10,
-                thickness: 1,
-                color: AppColors.border,
-              ),
-              itemBuilder: (context, index) => const _ProductItem(),
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: controller.fetchProducts(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text(
+                      'Error loading products',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  );
+                }
+
+                final products = snapshot.data ?? [];
+
+                if (products.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'No products found',
+                      style: TextStyle(color: AppColors.white),
+                    ),
+                  );
+                }
+
+                return ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  itemCount: products.length,
+                  separatorBuilder: (context, index) => const Divider(
+                    height: 10,
+                    thickness: 1,
+                    color: AppColors.border,
+                  ),
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    return _ProductItem(
+                      title: product['name'] ?? 'No Title',
+                      category: product['category'] ?? 'No Category',
+                      price: product['price']?.toString() ?? '0',
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],
@@ -132,7 +197,16 @@ class Products extends StatelessWidget {
 }
 
 class _ProductItem extends StatelessWidget {
-  const _ProductItem({Key? key}) : super(key: key);
+  final String title;
+  final String category;
+  final String price;
+
+  const _ProductItem({
+    Key? key,
+    required this.title,
+    required this.category,
+    required this.price,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -149,17 +223,15 @@ class _ProductItem extends StatelessWidget {
             ),
             child: const Icon(Icons.image, color: AppColors.surface, size: 28),
           ),
-
           const SizedBox(width: 12),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'Product Title',
-                  style: TextStyle(
+                Text(
+                  title,
+                  style: const TextStyle(
                     color: AppColors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -169,13 +241,13 @@ class _ProductItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '@ Category',
+                      '@ $category',
                       style: TextStyle(color: AppColors.surface, fontSize: 14),
                     ),
                     const Spacer(),
-                    const Text(
-                      'RS 150',
-                      style: TextStyle(
+                    Text(
+                      'RS $price',
+                      style: const TextStyle(
                         color: AppColors.primary,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

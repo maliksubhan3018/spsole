@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:spsole/controllers/product_controller.dart';
 import 'package:spsole/widgets/appbar.dart';
 import 'package:spsole/widgets/button.dart';
 import 'package:spsole/widgets/mycolors.dart';
 
-class AddProduct extends StatelessWidget {
+class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
+
+  @override
+  State<AddProduct> createState() => _AddProductState();
+}
+
+class _AddProductState extends State<AddProduct> {
+  final ProductController controller = ProductController();
+
+  @override
+  void dispose() {
+    controller.dispose(); // Dispose the controller
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +35,28 @@ class AddProduct extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             _buildLabel('Name'),
-            _buildSimpleTextField(hint: 'Product title'),
+            _buildSimpleTextField(
+              controller.nameController,
+              hint: 'Product title',
+            ),
 
             const SizedBox(height: 20),
 
             _buildLabel('Category'),
-            _buildSimpleTextField(hint: 'Product title'),
+            _buildSimpleTextField(
+              controller.categoryController,
+              hint: 'Category',
+            ),
 
             const SizedBox(height: 20),
 
-            
             _buildLabel('Description'),
-            _buildSimpleTextField(hint: 'Product title', maxLines: 3),
+            _buildSimpleTextField(
+              controller.descriptionController,
+              hint: 'Description',
+              maxLines: 3,
+            ),
 
             const SizedBox(height: 40),
 
@@ -42,7 +64,7 @@ class AddProduct extends StatelessWidget {
               child: Button(
                 text: 'Update',
                 onPressed: () {
-                  print('Update pressed');
+                  controller.submitProduct(context);
                 },
               ),
             ),
@@ -68,8 +90,13 @@ class AddProduct extends StatelessWidget {
     );
   }
 
-  Widget _buildSimpleTextField({required String hint, int maxLines = 1}) {
+  Widget _buildSimpleTextField(
+    TextEditingController controller, {
+    required String hint,
+    int maxLines = 1,
+  }) {
     return TextField(
+      controller: controller,
       maxLines: maxLines,
       style: const TextStyle(color: AppColors.white),
       decoration: InputDecoration(
@@ -97,5 +124,3 @@ class AddProduct extends StatelessWidget {
     );
   }
 }
-
-

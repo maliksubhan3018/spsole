@@ -26,10 +26,10 @@ class _DashboardState extends State<Dashboard> {
   List<Widget> _buildScreens() {
     return [
       const _DashboardHome(),
-      const Products(),
+       Products(),
       const _ScannerScreen(),
       const Orders(),
-      const Menu(),
+       Menu(),
     ];
   }
 
