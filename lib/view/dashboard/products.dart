@@ -143,53 +143,54 @@ class _ProductsState extends State<Products> {
           const SizedBox(height: 16),
 
           // Product List
-          Expanded(
-            child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: controller.fetchProducts(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Text(
-                      'Error loading products',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  );
-                }
-
-                final products = snapshot.data ?? [];
-
-                if (products.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'No products found',
-                      style: TextStyle(color: AppColors.white),
-                    ),
-                  );
-                }
-
-                return ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  itemCount: products.length,
-                  separatorBuilder: (context, index) => const Divider(
-                    height: 10,
-                    thickness: 1,
-                    color: AppColors.border,
-                  ),
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    return _ProductItem(
-                      title: product['name'] ?? 'No Title',
-                      category: product['category'] ?? 'No Category',
-                      price: product['price']?.toString() ?? '0',
-                    );
-                  },
-                );
-              },
-            ),
+         Expanded(
+  child: StreamBuilder<List<Map<String, dynamic>>>(
+    stream: controller.streamProducts(), // <-- new stream method
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      if (snapshot.hasError) {
+        return const Center(
+          child: Text(
+            'Error loading products',
+            style: TextStyle(color: Colors.red),
           ),
+        );
+      }
+
+      final products = snapshot.data ?? [];
+
+      if (products.isEmpty) {
+        return const Center(
+          child: Text(
+            'No products found',
+            style: TextStyle(color: AppColors.white),
+          ),
+        );
+      }
+
+      return ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        itemCount: products.length,
+        separatorBuilder: (context, index) => const Divider(
+          height: 10,
+          thickness: 1,
+          color: AppColors.border,
+        ),
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return _ProductItem(
+            title: product['name'] ?? 'No Title',
+            category: product['category'] ?? 'No Category',
+            price: product['price']?.toString() ?? '0',
+          );
+        },
+      );
+    },
+  ),
+),
+
         ],
       ),
     );
