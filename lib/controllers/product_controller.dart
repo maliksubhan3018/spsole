@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class ProductController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
+  final TextEditingController priceController = TextEditingController(); // Added
   final TextEditingController descriptionController = TextEditingController();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -13,9 +16,10 @@ class ProductController {
   Future<void> submitProduct(BuildContext context) async {
     String name = nameController.text.trim();
     String category = categoryController.text.trim();
+    String price = priceController.text.trim(); // Added
     String description = descriptionController.text.trim();
 
-    if (name.isEmpty || category.isEmpty || description.isEmpty) {
+    if (name.isEmpty || category.isEmpty || price.isEmpty || description.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please fill all fields"),
@@ -35,6 +39,7 @@ class ProductController {
           .add({
         'name': name,
         'category': category,
+        'price': price, // Added
         'description': description,
         'createdAt': FieldValue.serverTimestamp(),
       });
@@ -42,6 +47,7 @@ class ProductController {
       // Clear text fields
       nameController.clear();
       categoryController.clear();
+      priceController.clear(); // Added
       descriptionController.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -63,6 +69,7 @@ class ProductController {
   void dispose() {
     nameController.dispose();
     categoryController.dispose();
+    priceController.dispose(); // Added
     descriptionController.dispose();
   }
 }

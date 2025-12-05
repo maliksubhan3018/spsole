@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:spsole/services/auth_service.dart';
@@ -114,7 +114,7 @@ class Menu extends StatelessWidget {
             ),
             onTap: null, // no action
           ),
-
+SizedBox(height: 5,),
           const CustomListTile(
             icon: Icons.help,
             title: 'Help and Support',
@@ -125,6 +125,7 @@ class Menu extends StatelessWidget {
             ),
             onTap: null,
           ),
+SizedBox(height: 5,),
 
           const CustomListTile(
             icon: Icons.share,

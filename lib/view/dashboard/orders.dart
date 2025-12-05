@@ -115,7 +115,10 @@ class _OrdersState extends State<Orders> {
     return Scaffold(
       backgroundColor: AppColors.bgcolor,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(height: 30,),
           Container(
             padding: const EdgeInsets.all(10),
             child: Row(

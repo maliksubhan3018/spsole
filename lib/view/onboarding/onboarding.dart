@@ -15,6 +15,7 @@ class Onboarding extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(MyImages.boximage),
             const SizedBox(height: 8),

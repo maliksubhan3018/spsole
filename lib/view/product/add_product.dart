@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:spsole/controllers/product_controller.dart';
 import 'package:spsole/widgets/appbar.dart';
@@ -16,7 +18,7 @@ class _AddProductState extends State<AddProduct> {
 
   @override
   void dispose() {
-    controller.dispose(); // Dispose the controller
+    controller.dispose(); // Dispose all controllers
     super.dispose();
   }
 
@@ -42,7 +44,6 @@ class _AddProductState extends State<AddProduct> {
             ),
 
             const SizedBox(height: 20),
-
             _buildLabel('Category'),
             _buildSimpleTextField(
               controller.categoryController,
@@ -50,7 +51,14 @@ class _AddProductState extends State<AddProduct> {
             ),
 
             const SizedBox(height: 20),
+            _buildLabel('Price'),
+            _buildSimpleTextField(
+              controller.priceController,
+              hint: 'Price',
+              keyboardType: TextInputType.number,
+            ),
 
+            const SizedBox(height: 20),
             _buildLabel('Description'),
             _buildSimpleTextField(
               controller.descriptionController,
@@ -59,16 +67,14 @@ class _AddProductState extends State<AddProduct> {
             ),
 
             const SizedBox(height: 40),
-
             Center(
               child: Button(
-                text: 'Update',
+                text: 'Add',
                 onPressed: () {
                   controller.submitProduct(context);
                 },
               ),
             ),
-
             const SizedBox(height: 30),
           ],
         ),
@@ -94,10 +100,12 @@ class _AddProductState extends State<AddProduct> {
     TextEditingController controller, {
     required String hint,
     int maxLines = 1,
+    TextInputType keyboardType = TextInputType.text,
   }) {
     return TextField(
       controller: controller,
       maxLines: maxLines,
+      keyboardType: keyboardType,
       style: const TextStyle(color: AppColors.white),
       decoration: InputDecoration(
         hintText: hint,

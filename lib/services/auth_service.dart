@@ -1,4 +1,6 @@
 // lib/services/auth_service.dart
+// ignore_for_file: unused_field, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';

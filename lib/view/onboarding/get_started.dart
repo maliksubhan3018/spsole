@@ -16,6 +16,8 @@ class Getstarted extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Center(
           child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 80),
               Image.asset(MyImages.circleimg, height: 100, width: 100),
@@ -41,6 +43,18 @@ class Getstarted extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Button(
+                text: "Sign Up",
+                onPressed: () {
+ Get.toNamed(MyPagesName.signUp);                },
+              ),
+              SizedBox(height: 20,),
+               Button(
+                text: "Signin Using Google Account",
+                onPressed: () {
+ Get.toNamed(MyPagesName.signUp);                },
+              ),
+              SizedBox(height: 20,),
+               Button(
                 text: "Signin Using Google Account",
                 onPressed: () {
  Get.toNamed(MyPagesName.signUp);                },
