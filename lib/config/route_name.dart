@@ -7,4 +7,5 @@ class MyPagesName {
   static const String productDetails = "/ProductDetails";
   static const String signUp = "/SignUp";
   static const String splash = "/Splash";
+  static const String products = "/Products";
 }

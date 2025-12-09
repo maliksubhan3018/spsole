@@ -1,75 +1,110 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter/material.dart';
+// lib/controllers/product_controller.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ProductController {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController categoryController = TextEditingController();
-  final TextEditingController priceController = TextEditingController(); // Added
-  final TextEditingController descriptionController = TextEditingController();
-
+class ProductController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final RxList<Map<String, dynamic>> products = <Map<String, dynamic>>[].obs;
 
-  // Submit product into that user's collection
-  Future<void> submitProduct(BuildContext context) async {
-    String name = nameController.text.trim();
-    String category = categoryController.text.trim();
-    String price = priceController.text.trim(); // Added
-    String description = descriptionController.text.trim();
+  User? get currentUser => FirebaseAuth.instance.currentUser;
 
-    if (name.isEmpty || category.isEmpty || price.isEmpty || description.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please fill all fields"),
-          backgroundColor: Colors.red,
-        ),
-      );
+  @override
+  void onInit() {
+    super.onInit();
+    fetchProducts();
+  }
+
+  /// Add a new product to Firestore
+  Future<void> addProduct({
+    required String name,
+    required String category,
+    required String price,
+    required String description,
+  }) async {
+    if (currentUser == null) {
+      Get.snackbar('Error', 'You must be logged in to add a product');
       return;
     }
 
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-
     try {
-      await _firestore
-          .collection("users")
-          .doc(userId)
-          .collection("products")
-          .add({
+      double priceValue = double.tryParse(price) ?? 0.0;
+
+      await _firestore.collection('products').add({
         'name': name,
         'category': category,
-        'price': price, // Added
+        'price': priceValue,
         'description': description,
-        'createdAt': FieldValue.serverTimestamp(),
+        'userId': currentUser!.uid,
+        'created_at': FieldValue.serverTimestamp(),
       });
 
-      // Clear text fields
-      nameController.clear();
-      categoryController.clear();
-      priceController.clear(); // Added
-      descriptionController.clear();
+      Get.snackbar('Success', 'Product added successfully');
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Product added successfully"),
-          backgroundColor: Colors.green,
-        ),
-      );
+      // Refresh local list
+      await fetchProducts();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Error adding product: $e"),
-          backgroundColor: Colors.red,
-        ),
-      );
+      Get.snackbar('Error', e.toString());
     }
   }
 
-  void dispose() {
-    nameController.dispose();
-    categoryController.dispose();
-    priceController.dispose(); // Added
-    descriptionController.dispose();
+  /// Fetch products from Firestore
+  Future<void> fetchProducts() async {
+    try {
+      QuerySnapshot snapshot = await _firestore.collection('products').get();
+
+      products.value = snapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        return {
+          'id': doc.id,
+          'name': data['name'] ?? '',
+          'category': data['category'] ?? '',
+          'price': (data['price'] ?? 0).toString(),
+          'description': data['description'] ?? '',
+          'userId': data['userId'] ?? '',
+          'created_at': data['created_at'] ?? null,
+        };
+      }).toList();
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+  /// Stream products for real-time updates
+  Stream<List<Map<String, dynamic>>> streamProducts() {
+    return _firestore
+        .collection('products')
+        .orderBy('created_at', descending: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        return {
+          'id': doc.id,
+          'name': data['name'] ?? '',
+          'category': data['category'] ?? '',
+          'price': (data['price'] ?? 0).toString(),
+          'description': data['description'] ?? '',
+          'userId': data['userId'] ?? '',
+          'created_at': data['created_at'] ?? null,
+        };
+      }).toList();
+    });
+  }
+
+  /// Delete a product safely
+  Future<void> deleteProduct(String id) async {
+    try {
+      final doc = await _firestore.collection('products').doc(id).get();
+      if (doc.exists && doc['userId'] == currentUser?.uid) {
+        await _firestore.collection('products').doc(id).delete();
+        Get.snackbar('Deleted', 'Product removed successfully');
+        await fetchProducts();
+      } else {
+        Get.snackbar('Error', 'You are not authorized to delete this product');
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
   }
 }
