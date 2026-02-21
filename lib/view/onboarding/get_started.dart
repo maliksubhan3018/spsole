@@ -54,11 +54,10 @@ class Getstarted extends StatelessWidget {
  Get.toNamed(MyPagesName.signUp);                },
               ),
               SizedBox(height: 20,),
-               Button(
-                text: "Signin Using Google Account",
-                onPressed: () {
- Get.toNamed(MyPagesName.signUp);                },
-              ),
+                Button(
+                  text: "Signin Using Facebook Account",
+                  onPressed: () { Get.toNamed(MyPagesName.signUp);                  },
+                ),
             ],
           ),
         ),
