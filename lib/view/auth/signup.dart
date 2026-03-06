@@ -6,6 +6,7 @@ import 'package:spsole/widgets/button.dart';
 import 'package:spsole/widgets/customtextfield.dart';
 import 'package:spsole/widgets/mycolors.dart';
 import 'package:spsole/widgets/myimages.dart';
+import 'package:zi_core/zi_core_io.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({super.key});
@@ -56,6 +57,48 @@ class SignUp extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
+                // PIN Title
+                Text(
+                  'Create Your Secret PIN',
+                  style: ZiTypoStyles.titleXl.copyWith(
+                    color: ZiColors.textWhite,
+                  ),
+                ),
+                Text(
+                  'Create Your Secret PIN',
+                  style: ZiTypoStyles.titleLg.copyWith(
+                    color: ZiColors.textWhite,
+                  ),
+                ),
+                // PIN Title
+                Text(
+                  'Create Your Secret PIN',
+                  style: ZiTypoStyles.titleMd.copyWith(
+                    color: ZiColors.textWhite,
+                  ),
+                ),
+                // PIN Title
+                Text(
+                  'Create Your Secret PIN',
+                  style: ZiTypoStyles.titleSm.copyWith(
+                    color: ZiColors.textWhite,
+                  ),
+                ),
+                // PIN Title
+                Text(
+                  'Create Your Secret PIN',
+                  style: ZiTypoStyles.bodyMedium.copyWith(
+                    color: ZiColors.textWhite,
+                  ),
+                ),
+                Text(
+                  'Create Your Secret PIN',
+                  style: ZiTypoStyles.caption.copyWith(
+                    color: ZiColors.textWhite,
+                  ),
+                ),
+                const SizedBox(height: 16),
+
                 // PIN Field
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -101,15 +144,23 @@ class SignUp extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () => Get.back(),
-                      child: const Text(
+                      child: Text(
                         "Login",
-                        style: TextStyle(color: AppColors.primary),
+                        style: TextStyle(color: ZiColors.primary),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 25),
-
+                Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    // color: ZiColors.primarySoft,
+                    gradient: ZiColors.gradientLR,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
                 // Fingerprint
                 Container(
                   height: 50,

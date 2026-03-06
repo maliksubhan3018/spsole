@@ -1,6 +1,7 @@
 // In lib/widgets/custom_button.dart
 import 'package:flutter/material.dart';
 import 'package:spsole/widgets/mycolors.dart';
+import 'package:zi_core/zi_core_io.dart';
 
 class Button extends StatelessWidget {
   final String text;
@@ -24,7 +25,8 @@ class Button extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
+            // backgroundColor: AppColors.primary,
+            backgroundColor: ZiColors.primary,
             foregroundColor: AppColors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),

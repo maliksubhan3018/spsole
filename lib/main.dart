@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:spsole/config/route.dart';
 import 'package:spsole/config/route_name.dart';
 import 'package:spsole/firebase_options.dart';
+import 'package:spsole/widgets/mycolors.dart';
+import 'package:zi_core/zi_core_io.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +19,14 @@ void main() async {
   } catch (e) {
     print("error: $e");
   }
-
+  ziCoreInit(beta: true);
+  ZiColors.override(
+    ZiColorOverrides(
+      primary: AppColors.primary,
+      // secondary: ,
+      // tertiary: ,
+    )
+  );
   runApp(const MyApp());
 }
 
