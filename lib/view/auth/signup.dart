@@ -96,6 +96,18 @@ class SignUp extends StatelessWidget {
                   style: ZiTypoStyles.caption.copyWith(
                     color: ZiColors.textWhite,
                   ),
+                  
+                ),
+                Text(
+                  'Create Your Secret PIN',
+                  
+                  style: ZiTypoStyles.subHeading.copyWith(color: ZiColors.warning)
+                  
+                ),
+                 Text(
+                  'Create Your Secret PIN',
+                  
+style: ZiTypoStyles.caption.copyWith(color: ZiColors.success),                  
                 ),
                 const SizedBox(height: 16),
 

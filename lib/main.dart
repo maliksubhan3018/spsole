@@ -22,7 +22,7 @@ void main() async {
   ziCoreInit(beta: true);
   ZiColors.override(
     ZiColorOverrides(
-      primary: AppColors.primary,
+      primary: Colors.orange,
       // secondary: ,
       // tertiary: ,
     )
