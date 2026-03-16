@@ -39,7 +39,7 @@ class SignUp extends StatelessWidget {
 
                 // Email
                 CustomTextField(
-                  label: "Email Address",
+                  label: "Email Address", 
                   hintText: "Enter your email",
                   controller: controller.emailController,
                   keyboardType: TextInputType.emailAddress,
